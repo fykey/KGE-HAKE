@@ -1,0 +1,10 @@
+0	_InstantiateObject
+1	_Make
+2	_SpecifyComponent
+3	_IsComponentOf
+4	_SpecifyTask
+5	_InstantiateTask
+6	_Include
+7	_WhichGripper
+8	_WhichForce
+9	_WhichComponent

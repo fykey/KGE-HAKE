@@ -1,0 +1,4 @@
+/TaskInstance/Open_Bin_2	_WhichComponent	/ComponentClass/Bottle_Lid
+/TaskInstance/Open_Bottle_1	_WhichComponent	/ComponentClass/Bottle_Lid
+/TaskInstance/Grasp_Orange_1	_WhichComponent	/ComponentClass/Food_Body
+/TaskInstance/Grasp_Orange_2	_WhichComponent	/ComponentClass/Food_Body

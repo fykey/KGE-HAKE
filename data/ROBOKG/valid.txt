@@ -1,0 +1,17 @@
+/TaskInstance/Grasp_Apple_1	_WhichForce	/GraspingForce/Soft
+/TaskInstance/Grasp_Apple_2	_WhichForce	/GraspingForce/Soft
+/TaskInstance/Open_Bin_1	_WhichForce	/GraspingForce/Soft
+/TaskInstance/Open_Bin_2	_WhichForce	/GraspingForce/Soft
+/TaskInstance/Open_Bottle_1	_WhichForce	/GraspingForce/Soft
+/TaskInstance/Open_Bottle_2	_WhichForce	/GraspingForce/Soft
+/TaskInstance/Grasp_Bottle_1	_WhichComponent	/ComponentClass/Bottle_Body
+/TaskInstance/Grasp_Bottle_2	_WhichComponent	/ComponentClass/Bottle_Body
+/TaskInstance/Grasp_Bin_1	_WhichComponent	/ComponentClass/Bottle_Body
+/TaskInstance/Grasp_Bin_2	_WhichComponent	/ComponentClass/Bottle_Body
+/TaskInstance/Grasp_Orange_1	_WhichComponent	/ComponentClass/Food_Body
+/TaskInstance/Grasp_Orange_2	_WhichComponent	/ComponentClass/Food_Body
+/TaskInstance/Grasp_Apple_1	_WhichComponent	/ComponentClass/Food_Body
+/TaskInstance/Grasp_Apple_2	_WhichComponent	/ComponentClass/Food_Body
+/TaskInstance/Open_Bin_1	_WhichComponent	/ComponentClass/Bottle_Lid
+/TaskInstance/Open_Bin_2	_WhichComponent	/ComponentClass/Bottle_Lid
+/TaskInstance/Open_Bottle_1	_WhichComponent	/ComponentClass/Bottle_Lid
