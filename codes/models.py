@@ -100,6 +100,7 @@ class KGEModel(nn.Module, ABC):
 
         elif batch_type == BatchType.TAIL_BATCH:
             head_part, tail_part = sample
+            print(head_part.size(), tail_part.size())
             batch_size, negative_sample_size = tail_part.size(0), tail_part.size(1)
 
             head = torch.index_select(
