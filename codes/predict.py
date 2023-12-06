@@ -50,7 +50,7 @@ the_model = HAKE(len(entity_dict), len(relation_dict), config["hidden_dim"], con
 #summary(model=the_model, input_size=[(1, 1, 1), (1, 1, 1), (1, 1, 1)], batch_size=-1, device='cpu')
 
 
-head_index = keys = get_keys_from_value(entity_dict, '/TaskInstance/Grasp_Orange_2')
+head_index = keys = get_keys_from_value(entity_dict, '/TaskInstance/Open_Bin_2')
 relation_index = keys = get_keys_from_value(relation_dict, '_WhichComponent')
 tail_index = list(range(len(entity_dict)))
 #tail_index.remove(head_index[0])
@@ -60,7 +60,8 @@ head_tensor = torch.from_numpy(entity_npy[head_index]).unsqueeze(0)  # Assuming 
 relation_tensor = torch.from_numpy(relation_npy[relation_index]).unsqueeze(0)  # Assuming relation_tensor has shape [1, hidden_dim * 3]
 tail_tensor = torch.from_numpy(entity_npy[tail_index]).unsqueeze(0)  # Assuming tail_tensor has shape [num_entities - 1, hidden_dim * 2]
 # Load the trained model weights
-checkpoint = torch.load('./models/HAKE_ROBOKG_0/checkpoint')
+checkpoint = torch.load('./models/HAKE_ROBOKG_0/checkpoint_0')
+#checkpoint = torch.load('./checkpoint')
 the_model.load_state_dict(checkpoint["model_state_dict"])
 
 # Set the model to evaluation mode
@@ -69,10 +70,10 @@ score = []
 # Perform the prediction
 with torch.no_grad():
     # Modify the following line to pass 'None' for the 'tail' parameter
-    score = the_model.func(head_tensor, relation_tensor, tail_tensor, BatchType.TAIL_BATCH)
+    score = 9-the_model.func(head_tensor, relation_tensor, tail_tensor, BatchType.TAIL_BATCH)
 print(score.size())
 print(score)
-print(score[0,torch.argmin(score, dim=1)])
+print("minimum score = ", score[0,torch.argmin(score, dim=1)].item())
 print(entity_dict[torch.argmin(score, dim=1).item()])
 
 

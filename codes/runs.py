@@ -24,26 +24,26 @@ def parse_args(args=None):
     parser.add_argument('--do_valid', action='store_true')
     parser.add_argument('--do_test', action='store_true')
 
-    parser.add_argument('--data_path', type=str, default=None)
+    parser.add_argument('--data_path', type=str, default="./data/ROBOKG")
     parser.add_argument('--model', default='HAKE', type=str)
 
     parser.add_argument('-n', '--negative_sample_size', default=128, type=int)
-    parser.add_argument('-d', '--hidden_dim', default=500, type=int)
-    parser.add_argument('-g', '--gamma', default=12.0, type=float)
+    parser.add_argument('-d', '--hidden_dim', default=256, type=int)
+    parser.add_argument('-g', '--gamma', default=9.0, type=float)
     parser.add_argument('-a', '--adversarial_temperature', default=1.0, type=float)
-    parser.add_argument('-b', '--batch_size', default=1024, type=int)
+    parser.add_argument('-b', '--batch_size', default=16, type=int)
     parser.add_argument('--test_batch_size', default=4, type=int, help='valid/test batch size')
-    parser.add_argument('-mw', '--modulus_weight', default=1.0, type=float)
+    parser.add_argument('-mw', '--modulus_weight', default=0.5, type=float)
     parser.add_argument('-pw', '--phase_weight', default=0.5, type=float)
 
-    parser.add_argument('-lr', '--learning_rate', default=0.0001, type=float)
+    parser.add_argument('-lr', '--learning_rate', default=0.00005, type=float)
     parser.add_argument('-cpu', '--cpu_num', default=10, type=int)
     parser.add_argument('-init', '--init_checkpoint', default=None, type=str)
-    parser.add_argument('-save', '--save_path', default=None, type=str)
-    parser.add_argument('--max_steps', default=100000, type=int)
+    parser.add_argument('-save', '--save_path', default="./models/HAKE_ROBOKG_0", type=str)
+    parser.add_argument('--max_steps', default=80000, type=int)
 
-    parser.add_argument('--save_checkpoint_steps', default=10000, type=int)
-    parser.add_argument('--valid_steps', default=10000, type=int)
+    parser.add_argument('--save_checkpoint_steps', default=500, type=int)
+    parser.add_argument('--valid_steps', default=500, type=int)
     parser.add_argument('--log_steps', default=100, type=int, help='train log every xx steps')
     parser.add_argument('--test_log_steps', default=1000, type=int, help='valid/test log every xx steps')
 
@@ -65,7 +65,7 @@ def override_config(args):
     args.test_batch_size = args_dict['test_batch_size']
 
 
-def save_model(model, optimizer, save_variable_list, args):
+def save_model(model, optimizer, save_variable_list, args, step):
     '''
     Save the parameters of the model and the optimizer,
     as well as some other variables such as step and learning_rate
@@ -79,7 +79,7 @@ def save_model(model, optimizer, save_variable_list, args):
         **save_variable_list,
         'model_state_dict': model.state_dict(),
         'optimizer_state_dict': optimizer.state_dict()},
-        os.path.join(args.save_path, 'checkpoint')
+        os.path.join(args.save_path, ('checkpoint_' + str(step)))
     )
 
     entity_embedding = model.entity_embedding.detach().cpu().numpy()
@@ -201,6 +201,7 @@ def main(args):
     if args.init_checkpoint:
         # Restore model from checkpoint directory
         logging.info('Loading checkpoint %s...' % args.init_checkpoint)
+        print(os.path.join(args.init_checkpoint, 'checkpoint'))
         checkpoint = torch.load(os.path.join(args.init_checkpoint, 'checkpoint'))
         init_step = checkpoint['step']
         kge_model.load_state_dict(checkpoint['model_state_dict'])
@@ -249,7 +250,7 @@ def main(args):
                     'current_learning_rate': current_learning_rate,
                     'warm_up_steps': warm_up_steps
                 }
-                save_model(kge_model, optimizer, save_variable_list, args)
+                save_model(kge_model, optimizer, save_variable_list, args, step)
 
             if step % args.log_steps == 0:
                 metrics = {}
@@ -268,7 +269,7 @@ def main(args):
             'current_learning_rate': current_learning_rate,
             'warm_up_steps': warm_up_steps
         }
-        save_model(kge_model, optimizer, save_variable_list, args)
+        save_model(kge_model, optimizer, save_variable_list, args, step)
 
     if args.do_valid:
         logging.info('Evaluating on Valid Dataset...')
