@@ -1,6 +1,6 @@
 #!/bin/sh
 
-python -u -c 'import torch; print(torch.__version__)'
+python3 -u -c 'import torch; print(torch.__version__)'
 
 CODE_PATH=codes
 DATA_PATH=data
@@ -35,7 +35,7 @@ echo "Start Training......"
 
     if [ $MODEL == "HAKE" ]
     then
-        CUDA_VISIBLE_DEVICES=$GPU_DEVICE python -u $CODE_PATH/runs.py --do_train \
+        CUDA_VISIBLE_DEVICES=$GPU_DEVICE python3 -u $CODE_PATH/runs.py --do_train \
             --do_valid \
             --do_test \
             --data_path $FULL_DATA_PATH \
@@ -47,7 +47,7 @@ echo "Start Training......"
             -mw $MODULUS_WEIGHT -pw $PHASE_WEIGHT
      elif [ $MODEL == "ModE" ]
      then
-         CUDA_VISIBLE_DEVICES=$GPU_DEVICE python -u $CODE_PATH/runs.py --do_train \
+         CUDA_VISIBLE_DEVICES=$GPU_DEVICE python3 -u $CODE_PATH/runs.py --do_train \
             --do_valid \
             --do_test \
             --data_path $FULL_DATA_PATH \
@@ -63,14 +63,14 @@ then
 
 echo "Start Evaluation on Valid Data Set......"
 
-CUDA_VISIBLE_DEVICES=$GPU_DEVICE python -u $CODE_PATH/runs.py --do_valid -init $SAVE
+CUDA_VISIBLE_DEVICES=$GPU_DEVICE python3 -u $CODE_PATH/runs.py --do_valid -init $SAVE
 
 elif [ $MODE == "test" ]
 then
 
 echo "Start Evaluation on Test Data Set......"
 
-CUDA_VISIBLE_DEVICES=$GPU_DEVICE python -u $CODE_PATH/runs.py --do_test -init $SAVE
+CUDA_VISIBLE_DEVICES=$GPU_DEVICE python3 -u $CODE_PATH/runs.py --do_test -init $SAVE
 
 else
    echo "Unknown MODE" $MODE

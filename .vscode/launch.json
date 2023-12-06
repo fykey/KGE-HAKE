@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+
+
+
+
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["--do_train",
+            "--data_path",
+            "./models/HAKE_ROBOKG_0",
+            "--save_path",
+            "./models/HAKE_ROBOKG_0",
+            "--data_path",
+            "./data/ROBOKG"
+        ]
+        }
+    ]
+}
