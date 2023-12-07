@@ -50,8 +50,8 @@ the_model = HAKE(len(entity_dict), len(relation_dict), config["hidden_dim"], con
 #summary(model=the_model, input_size=[(1, 1, 1), (1, 1, 1), (1, 1, 1)], batch_size=-1, device='cpu')
 
 
-head_index = keys = get_keys_from_value(entity_dict, '/TaskInstance/Open_Bin_2')
-relation_index = keys = get_keys_from_value(relation_dict, '_WhichComponent')
+head_index = keys = get_keys_from_value(entity_dict, '/TaskCategory/Grasp')
+relation_index = keys = get_keys_from_value(relation_dict, '_SpecifyTask')
 tail_index = list(range(len(entity_dict)))
 #tail_index.remove(head_index[0])
 
@@ -60,7 +60,7 @@ head_tensor = torch.from_numpy(entity_npy[head_index]).unsqueeze(0)  # Assuming 
 relation_tensor = torch.from_numpy(relation_npy[relation_index]).unsqueeze(0)  # Assuming relation_tensor has shape [1, hidden_dim * 3]
 tail_tensor = torch.from_numpy(entity_npy[tail_index]).unsqueeze(0)  # Assuming tail_tensor has shape [num_entities - 1, hidden_dim * 2]
 # Load the trained model weights
-checkpoint = torch.load('./models/HAKE_ROBOKG_0/checkpoint_0')
+checkpoint = torch.load('./models/HAKE_ROBOKG_0/checkpoint_10000')
 #checkpoint = torch.load('./checkpoint')
 the_model.load_state_dict(checkpoint["model_state_dict"])
 
